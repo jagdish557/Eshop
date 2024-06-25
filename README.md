@@ -12,21 +12,19 @@ A list of Frequently Asked Questions about this repository can be found [here](h
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [Microsoft eShopOnWeb ASP.NET Core Reference Application](#microsoft-eshoponweb-aspnet-core-reference-application)
-  - [Table of Contents](#table-of-contents)
-  - [Overview Video](#overview-video)
-  - [eBook](#ebook)
-  - [Topics (eBook TOC)](#topics-ebook-toc)
-  - [Running the sample using Azd template](#running-the-sample-using-azd-template)
-    - [Windows](#windows)
-    - [Linux/MacOS](#linuxmacos)
-  - [Running the sample locally](#running-the-sample-locally)
-    - [Running the sample via the command line](#running-the-sample-via-the-command-line)
-    - [Running the sample via multiple startup projects](#running-the-sample-via-multiple-startup-projects)
-    - [Configuring the sample to use a data store](#configuring-the-sample-to-use-a-data-store)
-  - [Running the sample in the dev container](#running-the-sample-in-the-dev-container)
-  - [Running the sample using Docker](#running-the-sample-using-docker)
-  - [Community Extensions](#community-extensions)
+- [Overview Video](#overview-video)
+- [eBook](#ebook)
+- [Topics (eBook TOC)](#topics-ebook-toc)
+- [Running the sample using Azd template](#running-the-sample-using-azd-template)
+  - [Windows](#windows)
+  - [Linux/MacOS](#linuxmacos)
+- [Running the sample locally](#running-the-sample-locally)
+  - [Running the sample via the command line](#running-the-sample-via-the-command-line)
+  - [Running the sample via multiple startup projects](#running-the-sample-via-multiple-startup-projects)
+  - [Configuring the sample to use a data store](#configuring-the-sample-to-use-a-data-store)
+- [Running the sample in the dev container](#running-the-sample-in-the-dev-container)
+- [Running the sample using Docker](#running-the-sample-using-docker)
+- [Community Extensions](#community-extensions)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
