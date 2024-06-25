@@ -4,7 +4,7 @@ This Microsoft reference application is now being maintained by [NimblePros](htt
 
 If you're looking for the .NET Aspire eShop sample it's [here](https://github.com/dotnet/eShop). Microsoft also recommends the [Reliable Web App](https://learn.microsoft.com/azure/architecture/web-apps/guides/reliable-web-app/overview) patterns guidance for building web apps with enterprise app patterns.
 
-Sample ASP.NET Core reference application, powered by Microsoft, demonstrating a single-process (monolithic) application architecture and deployment model. If you're new to .NET development, read the [Getting Started for Beginners](https://github.com/dotnet-architecture/eShopOnWeb/wiki/Getting-Started-for-Beginners) guide.
+This is a sample ASP.NET Core reference application, powered by Microsoft, demonstrating a single-process (monolithic) application architecture and deployment model. If you're new to .NET development, read the [Getting Started for Beginners](https://github.com/dotnet-architecture/eShopOnWeb/wiki/Getting-Started-for-Beginners) guide.
 
 A list of Frequently Asked Questions about this repository can be found [here](https://github.com/dotnet-architecture/eShopOnWeb/wiki/Frequently-Asked-Questions).
 
@@ -12,17 +12,21 @@ A list of Frequently Asked Questions about this repository can be found [here](h
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [Overview Video](#overview-video)
-- [eBook](#ebook)
-- [Topics (eBook TOC)](#topics-ebook-toc)
-- [Running the sample using Azd template](#running-the-sample-using-azd-template)
-  - [Windows](#windows)
-  - [Linux/MacOS](#linuxmacos)
-- [Running the sample locally](#running-the-sample-locally)
-  - [Configuring the sample to use SQL Server](#configuring-the-sample-to-use-sql-server)
-- [Running the sample in the dev container](#running-the-sample-in-the-dev-container)
-- [Running the sample using Docker](#running-the-sample-using-docker)
-- [Community Extensions](#community-extensions)
+- [Microsoft eShopOnWeb ASP.NET Core Reference Application](#microsoft-eshoponweb-aspnet-core-reference-application)
+  - [Table of Contents](#table-of-contents)
+  - [Overview Video](#overview-video)
+  - [eBook](#ebook)
+  - [Topics (eBook TOC)](#topics-ebook-toc)
+  - [Running the sample using Azd template](#running-the-sample-using-azd-template)
+    - [Windows](#windows)
+    - [Linux/MacOS](#linuxmacos)
+  - [Running the sample locally](#running-the-sample-locally)
+    - [Running the sample via the command line](#running-the-sample-via-the-command-line)
+    - [Running the sample via multiple startup projects](#running-the-sample-via-multiple-startup-projects)
+    - [Configuring the sample to use a data store](#configuring-the-sample-to-use-a-data-store)
+  - [Running the sample in the dev container](#running-the-sample-in-the-dev-container)
+  - [Running the sample using Docker](#running-the-sample-using-docker)
+  - [Community Extensions](#community-extensions)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -110,33 +114,65 @@ According to the prompt, enter an `env name`, and select `subscription` and `loc
 You can also run the sample directly locally (See below).
 
 ## Running the sample locally
-Most of the site's functionality works with just the web application running. However, the site's Admin page relies on Blazor WebAssembly running in the browser, and it must communicate with the server using the site's PublicApi web application. You'll need to also run this project. You can configure Visual Studio to start multiple projects, or just go to the PublicApi folder in a terminal window and run `dotnet run` from there. After that from the Web folder you should run `dotnet run --launch-profile Web`. Now you should be able to browse to `https://localhost:5001/`. The admin part in Blazor is accessible to `https://localhost:5001/admin`  
 
-Note that if you use this approach, you'll need to stop the application manually in order to build the solution (otherwise you'll get file locking errors).
+There are 2 sites that run as part of eShopOnWeb:
 
-After cloning or downloading the sample you must setup your database. 
+- **PublicApi** - The API for querying the catalog
+- **Web** - The eCommerce site for shopping merchandise
+
+Most of the solution's functionality works with just the web application running.
+
+However, the site's Admin page relies on Blazor WebAssembly running in the browser, and it must communicate with the server using the solution's `PublicApi` web application.
+
+You can run the sample via the command line. You can also configure Visual Studio to start multiple projects. After cloning or downloading the sample, you must setup your database. 
+
 To use the sample with a persistent database, you will need to run its Entity Framework Core migrations before you will be able to run the app.
 
 You can also run the samples in Docker (see below).
 
-### Configuring the sample to use SQL Server
+### Running the sample via the command line
+
+1. Go to the `PublicApi` folder in a terminal window and run `dotnet run` from there. 
+2. After that, from the `Web` folder, you should run `dotnet run --launch-profile Web`. Now you should be able to browse to `https://localhost:5001/`. The admin part in Blazor is accessible to `https://localhost:5001/admin`  
+
+Note that if you use this approach, you'll need to stop the application manually in order to build the solution (otherwise you'll get file locking errors).
+
+### Running the sample via multiple startup projects
+
+In Visual Studio, you can run with multiple startup projects.
+
+1. Open `eShopOnWeb.sln` in Visual Studio.
+2. Select **Project** > **Configure Startup Projects...**.
+3. Select **Multiple startup projects**.
+4. Set the following projects' Action option to `Start`:   
+   - PublicApi
+   - Web
+5. Select **Apply**.
+6. Select **OK**.
+7. Select **Debug** > **Start Without Debugging**.
+
+(This part isn't working yet.)
+
+### Configuring the sample to use a data store
 
 1. By default, the project uses a real database. If you want an in memory database, you can add in the `appsettings.json` file in the Web folder
 
-    ```json
+   ```json
    {
        "UseOnlyInMemoryDatabase": true
    }
-    ```
+   ```
 
-1. Ensure your connection strings in `appsettings.json` point to a local SQL Server instance.
+> **Note**: If you choose to use the in-memory implementation, be aware of the [In-memory Database Provider Limitations](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli).
+
+1. Ensure your connection strings in `appsettings.json` for both `PublicApi` and `Web` projects point to a local SQL Server instance. As this uses a SQL Server-based implementation for Entity Framework Core, [LocalDB](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver16) or other SQL Server databases are supported.
 1. Ensure the tool EF was already installed. You can find some help [here](https://docs.microsoft.com/ef/core/miscellaneous/cli/dotnet)
 
     ```
     dotnet tool update --global dotnet-ef
     ```
 
-1. Open a command prompt in the Web folder and execute the following commands:
+1. Open a command prompt in the `src\Web` folder and execute the following commands:
 
     ```
     dotnet restore
@@ -149,7 +185,7 @@ You can also run the samples in Docker (see below).
 
 1. Run the application.
 
-    The first time you run the application, it will seed both databases with data such that you should see products in the store, and you should be able to log in using the demouser@microsoft.com account.
+    The first time you run the application, it will seed both databases with data such that you should see products in the store, and you should be able to log in using the **demouser@microsoft.com** account.
 
     Note: If you need to create migrations, you can use these commands:
 
